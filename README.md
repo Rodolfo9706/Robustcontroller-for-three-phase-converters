@@ -34,11 +34,11 @@ $$L \dot{i}_q = -R i_q - \frac{1}{2} p_q v_o - L \omega i_d$$
 $$C \dot{v}_o = \frac{3}{4} (p_d i_d + p_q i_q) - g_L v_o + C \delta(t)$$
 
 Where:
-- $i_d, i_q$: Active and reactive currents in the synchronous $dq$-frame.
-- $v_o$: DC-link output voltage (Target reference: $v_o^d$).
-- $p_d, p_q$: Averaged modulation indices subject to saturation set $\mathcal{S} = [-a_d, a_d] \times [-a_q, a_q]$.
-- $E_m, \omega$: Grid voltage peak amplitude and fundamental frequency.
-- $g_L, \delta(t)$: Load conductance ($1/R_L$) and external current disturbances.
+- $i_d, i_q$ : Active and reactive currents in the synchronous $dq$-frame.
+- $v_o$ : DC-link output voltage (Target reference: $v_o^d$).
+- $p_d, p_q$ : Averaged modulation indices subject to saturation set $\mathcal{S} = [-a_d, a_d] \times [-a_q, a_q]$.
+- $E_m, \omega$ : Grid voltage peak amplitude and fundamental frequency.
+- $g_L, \delta(t)$ : Load conductance ($1/R_L$) and external current disturbances.
 
 ---
 
