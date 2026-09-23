@@ -74,6 +74,7 @@ $$I(g) = \frac{E_m - \sqrt{E_m^2 - \frac{8}{3} R (v_o^d)^2 g}}{2 R}$$
 ├── Simulink_Simulation/   # Closed-loop converter models (.SLX) in Simscape/Power Electronics
 └── matlab_files/          # Parameter scripts (.M) and dynamic validation tests
 
+```
 
 git clone [https://github.com/Rodolfo9706/Robustcontroller-for-three-phase-converters.git](https://github.com/Rodolfo9706/Robustcontroller-for-three-phase-converters.git)
 cd Robustcontroller-for-three-phase-converters
