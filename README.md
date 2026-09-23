@@ -2,11 +2,13 @@
 
 ![MATLAB](https://img.shields.io/badge/MATLAB-R2021a%2B-orange?logo=mathworks)
 ![PSpice](https://img.shields.io/badge/OrCAD-PSpice-blue)
+![Status](https://img.shields.io/badge/Status-Under%20Review-yellow)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-Simulation, mathematical modeling, and experimental validation repository for the paper:
+Simulation, mathematical modeling, and experimental validation repository for the manuscript:
 > **"Robust Regulation of Three-Phase AC/DC Converters: Stability and Experimental Validation"**  
-> *Rodolfo Verdín and Gerardo Flores*, IEEE Transactions on Control Systems Technology (2026).
+> *Rodolfo Verdín and Gerardo Flores*  
+> Submitted to *IEEE Transactions on Control Systems Technology* (Under Review).
 
 ---
 
@@ -42,16 +44,21 @@ Where:
 
 ## 🛠️ Proposed Adaptive Control Law
 
-The proposed non-cascaded controller is defined as:
+The proposed non-cascaded controller is defined as follows:
 
-1. **Saturated Port Modulation Feedforward & Damping:**
-   $$p_d = \text{sat}_{a_d} \left( p_d^{eq}(g_r) - \frac{2 k_s}{3} \left[ I(g_r) (v_o - v_o^d) - v_o^d (i_d - I(g_r)) \right] \right)$$
-   $$p_q = \text{sat}_{a_q} \left( p_q^{eq}(g_r) + \frac{2 k_q}{3 v_o^d} i_q \right)$$
+**1. Saturated Port Modulation Feedforward & Damping:**
 
-2. **Conductance Reference Adaptation & Filtered Damping:**
-   $$g_r = \hat{g} - \kappa \bar{\nu} \tanh(\nu / \bar{\nu})$$
-   $$\dot{\nu} = \lambda_f (v_o - v_o^d - \nu)$$
-   $$\dot{\hat{g}} = \text{Proj} \left( \hat{g}, -2\gamma v_o^d (v_o - v_o^d) - \gamma \sigma (\hat{g} - g_c) \right)$$
+$$p_d = \text{sat}_{a_d} \left( p_d^{eq}(g_r) - \frac{2 k_s}{3} \left[ I(g_r) (v_o - v_o^d) - v_o^d (i_d - I(g_r)) \right] \right)$$
+
+$$p_q = \text{sat}_{a_q} \left( p_q^{eq}(g_r) + \frac{2 k_q}{3 v_o^d} i_q \right)$$
+
+**2. Conductance Reference Adaptation & Filtered Damping:**
+
+$$g_r = \hat{g} - \kappa \bar{\nu} \tanh(\nu / \bar{\nu})$$
+
+$$\dot{\nu} = \lambda_f (v_o - v_o^d - \nu)$$
+
+$$\dot{\hat{g}} = \text{Proj} \left( \hat{g}, \, -2\gamma v_o^d (v_o - v_o^d) - \gamma \sigma (\hat{g} - g_c) \right)$$
 
 Where $I(g)$ represents the active reference current derived from the non-linear power balance equation:
 
