@@ -1,58 +1,68 @@
-# **Robust Regulation and PSpice Validation of Three-Phase AC/DC Converters**
+# Robust Regulation and PSpice Validation of Three-Phase AC/DC Converters
 
-This project contains simulations and validations for **three-phase rectifiers** using **Simulink** and **PSpice**, focusing on robust regulation. No programming is required; simply download the files and run the simulations.
+![MATLAB](https://img.shields.io/badge/MATLAB-R2021a%2B-orange?logo=mathworks)
+![PSpice](https://img.shields.io/badge/OrCAD-PSpice-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## **Project Overview**  
-The project explores the modeling and simulation of three-phase AC/DC converters, combining electrical circuit simulation tools like **OrCAD PSpice** with control systems implemented in **Simulink**. The system's performance is validated both at the circuit level and through mathematical models to ensure robustness under different operating conditions.
-
-## **Project Structure**  
-The repository contains the following folders:  
-
-1. **PSpice_files/**  
-   - Electrical circuits of the three-phase rectifier.
-   - Simulation at the component level using **PSpice**.
-
-2. **Simulink_Simulation/**  
-   - Complete simulations of the rectifier using **Power Electronics Toolbox** in Simulink.
-   - Includes the **control system** implemented to regulate the output.
-
-3. **matlab_files/**  
-   - Mathematical models of the rectifier and the controller.
-   - Numerical simulations using MATLAB/Simulink.
+Simulation, mathematical modeling, and experimental validation repository for the paper:
+> **"Robust Regulation of Three-Phase AC/DC Converters: Stability and Experimental Validation"**  
+> *Rodolfo Verdín and Gerardo Flores*, IEEE Transactions on Control Systems Technology (2026).
 
 ---
 
-## **Prerequisites**  
-To run the simulations, you need the following software:  
+## 📌 Project Overview
 
-- **MATLAB/Simulink** (preferably version 2021a or later).  
-- **OrCAD PSpice** (compatible with the provided files).  
-- **Power Electronics Toolbox** installed in Simulink.
+This repository provides a complete open-source simulation environment and hardware implementation workflow for controlling a **three-phase PWM rectifier** with unity power factor under:
+- Unknown constant and dynamic DC-bus load variations ($\delta(t)$).
+- Actuator/modulation index saturation limits ($p \in \mathcal{S}$).
+- Grid disturbances and parameter uncertainties.
+
+The design features a **Passivity-Based Adaptive Controller** operating on the passive output of the converter, adapting the active current reference via an estimate of equivalent bus conductance ($\hat{g}$) paired with a filtered, bounded proportional action.
 
 ---
 
-## **Installation and Usage Guide**  
+## 📐 Dynamic Model & Mathematical Formulation
 
-### 1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Rodolfo9706/Robustcontroller-for-three-phase-converters.git
-   cd Robustcontroller-for-three-phase-converters
-```
-### 2. **Prepare MATLAB Parameters:**  
-Before running any Simulink model, execute the corresponding `.m` file containing the system or control parameters. Example:
+Applying the amplitude-invariant **Park transformation** synchronized with the grid via PLL ($i_q = 0 \implies \text{Unity Power Factor}$), the averaged bilinear dynamic model of the rectifier in the $dq$ frame is given by:
 
-```matlab
-run('paramet.m')
+$$L \dot{i}_d = -R i_d - \frac{1}{2} p_d v_o + L \omega i_q + E_m$$
 
-```
+$$L \dot{i}_q = -R i_q - \frac{1}{2} p_q v_o - L \omega i_d$$
 
-3. **Run Simulink Simulations:**  
+$$C \dot{v}_o = \frac{3}{4} (p_d i_d + p_q i_q) - g_L v_o + C \delta(t)$$
 
-    Open MATLAB and load the required .m file with the parameters (as indicated above).
-    Navigate to the folder containing the desired Simulink model (e.g., Simulink_Simulation/).
-    Open and run the .slx file to visualize the system's behavior.
+Where:
+- $i_d, i_q$: Active and reactive currents in the synchronous $dq$-frame.
+- $v_o$: DC-link output voltage (Target reference: $v_o^d$).
+- $p_d, p_q$: Averaged modulation indices subject to saturation set $\mathcal{S} = [-a_d, a_d] \times [-a_q, a_q]$.
+- $E_m, \omega$: Grid voltage peak amplitude and fundamental frequency.
+- $g_L, \delta(t)$: Load conductance ($1/R_L$) and external current disturbances.
 
-4. **Run PSpice Simulations:**  
+---
 
-    Open OrCAD PSpice and load the project file (rectcarga.opj) or the schematic (RECTCARGA.DSN).
-    Run the simulations to analyze the electrical behavior of the rectifier at the component level.
+## 🛠️ Proposed Adaptive Control Law
+
+The proposed non-cascaded controller is defined as:
+
+1. **Saturated Port Modulation Feedforward & Damping:**
+   $$p_d = \text{sat}_{a_d} \left( p_d^{eq}(g_r) - \frac{2 k_s}{3} \left[ I(g_r) (v_o - v_o^d) - v_o^d (i_d - I(g_r)) \right] \right)$$
+   $$p_q = \text{sat}_{a_q} \left( p_q^{eq}(g_r) + \frac{2 k_q}{3 v_o^d} i_q \right)$$
+
+2. **Conductance Reference Adaptation & Filtered Damping:**
+   $$g_r = \hat{g} - \kappa \bar{\nu} \tanh(\nu / \bar{\nu})$$
+   $$\dot{\nu} = \lambda_f (v_o - v_o^d - \nu)$$
+   $$\dot{\hat{g}} = \text{Proj} \left( \hat{g}, -2\gamma v_o^d (v_o - v_o^d) - \gamma \sigma (\hat{g} - g_c) \right)$$
+
+Where $I(g)$ represents the active reference current derived from the non-linear power balance equation:
+
+$$I(g) = \frac{E_m - \sqrt{E_m^2 - \frac{8}{3} R (v_o^d)^2 g}}{2 R}$$
+
+---
+
+## 📁 Repository Structure
+
+```text
+.
+├── PSpice_files/          # OrCAD PSpice component-level schematics (.DSN, .OPJ)
+├── Simulink_Simulation/   # Closed-loop converter models (.SLX) in Simscape/Power Electronics
+└── matlab_files/          # Parameter scripts (.M) and dynamic validation tests
