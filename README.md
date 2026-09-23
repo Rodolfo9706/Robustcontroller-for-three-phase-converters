@@ -1,4 +1,4 @@
-# Robust Regulation and PSpice Validation of Three-Phase AC/DC Converters
+# Robust Regulation of Three-Phase AC/DC Converters: Stability and Experimental Validation
 
 ![MATLAB](https://img.shields.io/badge/MATLAB-R2021a%2B-orange?logo=mathworks)
 ![PSpice](https://img.shields.io/badge/OrCAD-PSpice-blue)
