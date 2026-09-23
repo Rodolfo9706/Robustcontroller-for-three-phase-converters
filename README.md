@@ -73,3 +73,25 @@ $$I(g) = \frac{E_m - \sqrt{E_m^2 - \frac{8}{3} R (v_o^d)^2 g}}{2 R}$$
 ├── PSpice_files/          # OrCAD PSpice component-level schematics (.DSN, .OPJ)
 ├── Simulink_Simulation/   # Closed-loop converter models (.SLX) in Simscape/Power Electronics
 └── matlab_files/          # Parameter scripts (.M) and dynamic validation tests
+
+
+git clone [https://github.com/Rodolfo9706/Robustcontroller-for-three-phase-converters.git](https://github.com/Rodolfo9706/Robustcontroller-for-three-phase-converters.git)
+cd Robustcontroller-for-three-phase-converters
+
+run('matlab_files/paramet.m')
+
+Metric / Method,Proposed,Grosso et al. [22],Pérez et al. [19],Verrelli et al. [21],Hernández et al. [20],Classical PI
+Max Voltage Error (∣e3​∣),5.1 V,3.5 V,4.8 V,4.8 V,7.5 V,16.3 V
+RMS Voltage Error (e3​),0.56 V,0.27 V,0.39 V,0.39 V,2.05 V,3.99 V
+Minimum Power Factor,1.000,0.745,1.000,1.000,0.992,1.000
+Startup Overshoot (vo​),169 V,213 V,311 V,2276 V (Unstable),235 V,198 V
+1% Settling Time,0.10 s,0.41 s,Unstable,Failed,>1.5 s,0.44 s
+Param. Error Drift,0.0 V,0.0 V,Unstable,0.8 V,19.2 V,0.0 V
+Stability Guarantee,Global + Saturation,Global + Saturation,None,Local Exponential,Global Adaptive,None
+
+@article{verdin2026robust,
+  title={Robust Regulation of Three-Phase AC/DC Converters: Stability and Experimental Validation},
+  author={Verd{\'i}n, Rodolfo and Flores, Gerardo},
+  journal={submitted to IEEE Transactions on Control Systems Technology (Under Review)},
+  year={2026}
+}
